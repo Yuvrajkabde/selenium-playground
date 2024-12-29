@@ -17,8 +17,6 @@ driver=webdriver.Chrome(service=serv_obj)
 #Navigate to LamdaTest selenium playground table
 driver.get("https://www.lambdatest.com/selenium-playground/table-sort-search-demo")
 driver.implicitly_wait(30)
-#Finding the no of entries present
-table_rows= driver.find_elements(By.XPATH,"//table[@id='example']/tbody/tr")
 
 # Locate search Box and search for "New York" entries
 search_box = driver.find_element(By.XPATH,"//input[@type='search']")
@@ -28,10 +26,10 @@ search_box.send_keys(Keys.RETURN)
 driver.implicitly_wait(30)
 
 #Calculate the no of rows
-
 visible_row = driver.find_elements(By.XPATH,"//table/tbody/tr[@role='row']")
-
-total_entries = len(table_rows)
+#Validate the Search results shows *5 entries out of 24 total entries*
+webelement=driver.find_element(By.XPATH,"//div[@id='example_info']")
+Search_Text=webelement.text
 visible_entries=len(visible_row)
 print(visible_entries)
 print(total_entries)
@@ -39,7 +37,7 @@ print(total_entries)
 
 #Assertion
 assert visible_entries ==5, f"Expected 5 entries, but got {visible_entries}"
-assert total_entries ==24, f"Expected 24 entries, but got {total_entries}"
+assert Search_Text =="5 entries out of 24 total entries"
 
 print("Search Validation Passed")
 
